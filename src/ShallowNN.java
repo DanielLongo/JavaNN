@@ -17,7 +17,13 @@ public class ShallowNN {
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
-//    public void propagate() {
-////        BetterArray a = Activations.applyFuntion (z, "sigmoid");
-//    }
+    public void propagate() {
+        BetterArray z = x.dot (w);
+        z = z.add (b.broadcastArray (z));
+        BetterArray a = Activations.applyFuntion (z , "sigmoid");
+    }
+
+    public void backward() {
+
+    }
 }

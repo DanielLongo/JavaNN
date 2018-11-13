@@ -5,6 +5,11 @@ public class Activations {
         return (float)( 1/ (1 + Math.pow(Math.E, -x)));
     }
 
+    public static float DSigmoid(float dA, float x) {
+        float s = 1/(1 + Math.pow(-x,));
+
+    }
+
     public static float ReLU(float x) {
         if (x < 0) return 0;
         else return x;

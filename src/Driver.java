@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Driver {
     public static void main(String[] args) {
         System.out.println ("wow");
-        arrayTests ();
+//        arrayTests ();
     }
     public static void arrayTests() {
 //        BetterArray a1 = new BetterArray (new int[]{10,10,1}, 0);

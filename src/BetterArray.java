@@ -181,4 +181,15 @@ public class BetterArray {
         }
         return out;
     }
+    public BetterArray add(BetterArray x) {
+        BetterArray out = new BetterArray (x.array);
+        for (int a = 0; a < h; a++) {
+            for (int b = 0; b < w; b++) {
+                for (int d = 0; d < c; d++) {
+                    out.array[a][b][d] = this.array[a][b][d] + x.array[a][b][d];
+                }
+            }
+        }
+        return out;
+    }
 }
