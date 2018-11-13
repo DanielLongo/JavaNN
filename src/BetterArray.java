@@ -4,8 +4,8 @@ import java.util.function.Function;
 
 public class BetterArray {
     public float[][][] array;
-    public int w;
     public int h;
+    public int w;
     public int c;
 
     public BetterArray(int shape[], int value) {
@@ -17,9 +17,10 @@ public class BetterArray {
     }
 
     public BetterArray(float[][][] array) {
-        c = array.length;
+
+        c = array[0][0].length;
         w = array[0].length;
-        h = array[0][0].length;
+        h = array.length;
         this.array = array;
     }
 
@@ -49,7 +50,7 @@ public class BetterArray {
     }
 
     public void printShape() {
-        System.out.println ("Shape of array: (" + w + "," + h + "," + c + ")");
+        System.out.println ("Shape of array: (" + h + "," + w + "," + c + ")");
     }
 
     public float[][][] getArray() {
@@ -69,13 +70,15 @@ public class BetterArray {
     }
 
     public void printArray() {
-        for (int a = 0; a < w; a++) {
-            for (int b = 0; b < h; b++) {
+        for (int a = 0; a < h; a++) {
+            for (int b = 0; b < w; b++) {
                 for (int d = 0; d < c; d++) {
                     System.out.print (array[a][b][d]);
+                    System.out.print (" ");
                 }
-                System.out.printf ("");
+                System.out.print ("  ");
             }
+            System.out.print ("\n");
         }
     }
 
@@ -110,6 +113,38 @@ public class BetterArray {
             out[i] = array[i][index];
         }
         return out;
+    }
+
+    public BetterArray broadcastArray(BetterArray x) {
+        assert (this.h + this.c) == 2 : "Broadcasted Array is multidimensional";
+        float curVal;
+        BetterArray newArray = new BetterArray (x.array);
+        printShape ();
+//        printArray ();
+        x.printShape ();
+        for (int d = 0; d < c; d++) {
+            for (int a = 0; a < w; a++) {
+                System.out.println ("a " + a );
+                System.out.println ("d " + d );
+                curVal = this.array[d][0][a];
+                for (int b = 0; b < h; b++) {
+                    newArray.array[a][b][d] = curVal;
+                }
+            }
+        }
+        return newArray;
+    }
+
+    public float sum() {
+        float sum = 0;
+        for (int a = 0; a < h; a++) {
+            for (int b = 0; b < w; b++) {
+                for(int d = 0; d < c; d++) {
+                    sum += this.array[a][b][d];
+                }
+            }
+        }
+        return sum;
     }
 
     public BetterArray dot(BetterArray x) {
