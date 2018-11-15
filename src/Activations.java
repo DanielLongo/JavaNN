@@ -6,8 +6,8 @@ public class Activations {
     }
 
     public static float DSigmoid(float dA, float x) {
-        float s = 1/(1 + Math.pow(-x,));
-
+        float s = (float)(1/(1 + Math.pow(-(double)(x),2)));
+        return s;
     }
 
     public static float ReLU(float x) {
@@ -21,8 +21,8 @@ public class Activations {
 
     public static BetterArray applyFuntion(BetterArray x, String operation) {
         BetterArray out = new BetterArray (x.array);
-        for (int a = 0; a < x.w; a++) {
-            for (int b = 0; b < x.h; b++) {
+        for (int a = 0; a < x.h; a++) {
+            for (int b = 0; b < x.w; b++) {
                 for (int c = 0; c < x.c; c++) {
                     if (operation == "sigmoid") out.array[a][b][c] = sigmoid(x.array[a][b][c]);
                     else if (operation == "ReLU") out.array[a][b][c] = ReLU(x.array[a][b][c]);

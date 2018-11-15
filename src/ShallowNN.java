@@ -9,21 +9,31 @@ public class ShallowNN {
         this.d = d;
         this.x = x;
         this.y = y;
+        initializeVariables ();
     }
 
     public void initializeVariables() {
-        w = new BetterArray (new int[]{d, x.array[0].length, 1}, 0);
+        w = new BetterArray (new int[]{x.array[0].length, d, 1}, 0);
         b = new BetterArray (new int[]{x.array.length, d, 1},0);
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
     public void propagate() {
+        System.out.print ("x " );
+        x.printShape ();
+        System.out.print ("w ");
+        w.printShape ();
         BetterArray z = x.dot (w);
-        z = z.add (b.broadcastArray (z));
+        System.out.print ("z ");
+        z.printShape ();
+//        z = z.add (b.broadcastArray (z));
         BetterArray a = Activations.applyFuntion (z , "sigmoid");
+        a.printShape ();
+        a.printArray ();
+
     }
 
-    public void backward() {
+//    public void backward() {
 
-    }
+//    }
 }

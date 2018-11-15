@@ -1,3 +1,6 @@
+import com.sun.istack.internal.localization.NullLocalizable;
+import sun.util.resources.cldr.ar.CalendarData_ar_YE;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.function.Function;
@@ -9,10 +12,10 @@ public class BetterArray {
     public int c;
 
     public BetterArray(int shape[], int value) {
-        w = shape[0];
-        h = shape[1];
+        h = shape[0];
+        w = shape[1];
         c = shape[2];
-        array = new float[w][h][c];
+        array = new float[h][w][c];
         this.fillArray (value);
     }
 
@@ -29,8 +32,8 @@ public class BetterArray {
     }
 
     public void randomizeArray(int min, int max) {
-        for (int i = 0; i < w; i++) {
-            for (int y = 0; y < h; y++) {
+        for (int i = 0; i < h; i++) {
+            for (int y = 0; y < w; y++) {
                 for (int z = 0; z < c; z++) {
                     array[i][y][z] = getRandomValue (min, max);
                 }
@@ -39,8 +42,8 @@ public class BetterArray {
     }
 
     public void fillArray(int value) {
-        for (int i = 0; i < w; i++) {
-            for (int y = 0; y < h; y++) {
+        for (int i = 0; i < h; i++) {
+            for (int y = 0; y < w; y++) {
                 for (int z = 0; z < c; z++) {
 
                     array[i][y][z] = value;
@@ -62,7 +65,7 @@ public class BetterArray {
     }
 
     public int[] getShape() {
-        return new int[]{w, h, c};
+        return new int[]{h, w, c};
     }
 
     public float getValue(int w, int h, int c) {
@@ -83,9 +86,10 @@ public class BetterArray {
     }
 
     public float innerProduct(float[] a, float[] b) {
-        assert a.length == b.length : "length of arrays not equal in innerProduct";
-//        System.out.printf ("a " + a.length);
-//        System.out.printf ("b " + b.length);
+        if (a.length != b.length) {
+            System.out.println ("a length " + a.length + " b length " + b.length);
+            throw new IllegalArgumentException ("length of arrays are not equal");
+        }
         float sum = 0.0f;
         for (int i = 0; i < a.length; i++) {
             sum += a[i] * b[i];
@@ -105,12 +109,18 @@ public class BetterArray {
         return out;
     }
 
-    public float[] getElement(float[][] array, int index) {
-//        System.out.println ("index " + index);
-//        System.out.println (Arrays.deepToString (array) );
-        float[] out = new float[array.length];
-        for (int i = 0; i < array.length; i++) {
-            out[i] = array[i][index];
+    public float[] getElement(float[][] x, int index) {
+        float[] out = new float[x.length];
+        for (int i = 0; i < x.length; i++) {
+            out[i] = x[i][index];
+        }
+        return out;
+    }
+
+    public float[] getElement(float[][][] x, int colNum, int index) {
+        float[] out = new float[x.length];
+        for (int i = 0; i < x.length; i++) {
+            out[i] = x[i][colNum][index];
         }
         return out;
     }
@@ -123,11 +133,11 @@ public class BetterArray {
 //        printArray ();
         x.printShape ();
         for (int d = 0; d < c; d++) {
-            for (int a = 0; a < w; a++) {
+            for (int a = 0; a < h; a++) {
                 System.out.println ("a " + a );
                 System.out.println ("d " + d );
                 curVal = this.array[d][0][a];
-                for (int b = 0; b < h; b++) {
+                for (int b = 0; b < w; b++) {
                     newArray.array[a][b][d] = curVal;
                 }
             }
@@ -147,40 +157,62 @@ public class BetterArray {
         return sum;
     }
 
+    public void checkIfCanDot(BetterArray x) {
+        if (!((c == 1) && (x.getShape ()[2] == 1))) {
+            this.printShape ();
+            x.printShape ();
+            throw new IllegalArgumentException ("invalid input channels");
+        }
+        else if (this.getShape ()[1] != x.getShape ()[0]) {
+            System.out.println (this.getShape ()[1]);
+            System.out.println (x.getShape ()[0] );
+            this.printShape ();
+            x.printShape ();
+            throw new IllegalArgumentException ("Invalid input shapes. Inner dimensions do not match");
+        }
+    }
+
     public BetterArray dot(BetterArray x) {
-        assert ((c == 1) && (x.getShape ( )[-1] == 1));
-        int[] outShape = {this.w, x.getShape ( )[1], 1};
+        this.checkIfCanDot (x);
+        int[] outShape = {this.getShape ()[0], x.getShape()[1], 1};
+        BetterArray out = new BetterArray (outShape,1);
         float[] currColumn;
         float[] currRow;
-        float[] currRowSqueeze;
         float currInner;
-        BetterArray out = new BetterArray (outShape, 0);
-//        System.out.printf ("w" + w + " h" + h + " c " + c);
-        this.printShape ( );
-        x.printShape ( );
-        System.out.println (Arrays.deepToString (array));
-        System.out.println (Arrays.deepToString (array[0]));
-        for (int i = 0; i < this.w; i++) {
-            currColumn = array[0][i];
-            for (int y = 0; y < x.h; y++) {
-//                System.out.println ("h of x " + x.h );
-                currRow = x.getElement ((x.array)[0], y);
-//                currRow = x.array[0];
-//                currRow = x.getElement(x, 0);
-//                System.out.println ("Row KSDJHFKLSJHDFK " + Arrays.deepToString (currRow));
-//                currRowSqueeze = squeeze(currRow);
+        for (int i = 0; i < out.getShape ()[0]; i++) {
+            currColumn = this.getElement (this.array[i], 0);
+//            System.out.println ("Curr column");
+//            System.out.println (Arrays.toString (currColumn));
 
-//                System.out.println ("Columns " + Arrays.deepToString (currColumn));
-//                System.out.println ("cr " + currRow.length  + " cr [0] " + currRow.length);
-//                System.out.println ("column " + currColumn.length );
-//                System.out.println ("row " + currRow.length );
+            for (int y = 0; y < out.getShape ()[1]; y++) {
+                currRow = x.getElement (x.array, y,0);
+//                System.out.println ("Curr row");
+//                System.out.println (Arrays.toString (currRow));
                 currInner = innerProduct (currColumn, currRow);
-//                System.out.println ("curr inner " + currInner);
                 out.array[i][y][0] = currInner;
             }
         }
+        out.printArray ();
         return out;
     }
+//    public BetterArray dot(BetterArray x) {
+//        assert ((c == 1) && (x.getShape ( )[-1] == 1));
+//        int[] outShape = {this.w, x.getShape ( )[1], 1};
+//        float[] currColumn;
+//        float[] currRow;
+//        float[] currRowSqueeze;
+//        float currInner;
+//        BetterArray out = new BetterArray (outShape, 0);
+//        for (int i = 0; i < this.w; i++) {
+//            currColumn = array[0][i];
+//            for (int y = 0; y < x.h; y++) {
+//                currRow = x.getElement ((x.array)[0], y);
+//                currInner = innerProduct (currColumn, currRow);
+//                out.array[i][y][0] = currInner;
+//            }
+//        }
+//        return out;
+//    }
     public BetterArray add(BetterArray x) {
         BetterArray out = new BetterArray (x.array);
         for (int a = 0; a < h; a++) {
