@@ -2,6 +2,7 @@ import com.sun.istack.internal.localization.NullLocalizable;
 import sun.util.resources.cldr.ar.CalendarData_ar_YE;
 
 import java.lang.reflect.Method;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -126,22 +127,30 @@ public class BetterArray {
     }
 
     public BetterArray broadcastArray(BetterArray x) {
-        assert (this.h + this.c) == 2 : "Broadcasted Array is multidimensional";
+        if ((this.w + this.c) == 2) {
+            throw new InvalidParameterException("Brodacasted Array is multidimensional");
+        }
         float curVal;
         BetterArray newArray = new BetterArray (x.array);
-        printShape ();
-//        printArray ();
-        x.printShape ();
-        for (int d = 0; d < c; d++) {
-            for (int a = 0; a < h; a++) {
-                System.out.println ("a " + a );
-                System.out.println ("d " + d );
-                curVal = this.array[d][0][a];
-                for (int b = 0; b < w; b++) {
-                    newArray.array[a][b][d] = curVal;
+        float currValue;
+        for (int i = 0; i < h; i++) {
+            currValue = this.array[i][0][0];
+            for (int y = 0; y < w; y++) {
+                for (int z = 0; z < c; z++) {
+                    newArray.array[i][y][z] = currValue;
                 }
             }
         }
+//        for (int d = 0; d < c; d++) {
+//            for (int a = 0; a < h; a++) {
+//                System.out.println ("a " + a );
+//                System.out.println ("d " + d );
+//                curVal = this.array[d][0][a];
+//                for (int b = 0; b < w; b++) {
+//                    newArray.array[a][b][d] = curVal;
+//                }
+//            }
+//        }
         return newArray;
     }
 

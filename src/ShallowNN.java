@@ -14,7 +14,7 @@ public class ShallowNN {
 
     public void initializeVariables() {
         w = new BetterArray (new int[]{x.array[0].length, d, 1}, 0);
-        b = new BetterArray (new int[]{x.array.length, d, 1},0);
+        b = new BetterArray (new int[]{x.array.length, d, 1},1);
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
@@ -26,8 +26,10 @@ public class ShallowNN {
         BetterArray z = x.dot (w);
         System.out.print ("z ");
         z.printShape ();
+        b.broadcastArray(z).printShape();
 //        z = z.add (b.broadcastArray (z));
         BetterArray a = Activations.applyFuntion (z , "sigmoid");
+        System.out.print("A: ");
         a.printShape ();
         a.printArray ();
 
