@@ -35,6 +35,10 @@ public class ShallowNN {
 
     }
 
+    public void backpropagate() {
+
+    }
+
 //    public void backward() {
 
 //    }

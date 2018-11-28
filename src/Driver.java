@@ -1,14 +1,22 @@
 import java.util.Arrays;
 
 public class Driver {
+    public static void CELTests() {
+        float[] a = new float[]{1,0,0,(float).4,1};
+        float[] y = new float[]{1,0,1,0,0};
+        float loss = utils.crossEntropyLoss(a, y);
+        System.out.println ("Loss " + loss);
+    }
     public static void main(String[] args) {
+        CELTests ();
+    }
+
+    public static void ShallowNNTests() {
         BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
         int[] y = new int[] {1,2};
         ShallowNN nn = new ShallowNN (x, y, 10);
         nn.propagate ();
-//        arrayTests ();
     }
-
     public static void arrayTests() {
         BetterArray a = new BetterArray(new float[][][]{
                 {
