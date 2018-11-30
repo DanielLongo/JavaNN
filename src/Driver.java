@@ -13,14 +13,16 @@ public class Driver {
         System.out.println ("Loss " + loss);
     }
     public static void main(String[] args) {
-        CELTests ();
+
+//        CELTests ();
+        ShallowNNTests ();
     }
 
     public static void ShallowNNTests() {
         BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        int[] y = new int[] {1,2};
-        ShallowNN nn = new ShallowNN (x, y, 10);
-        nn.propagate ();
+        boolean[] y = new boolean[] {true,false};
+        ShallowNN nn = new ShallowNN (x, y, 1);
+        nn.optimize (10);
     }
     public static void arrayTests() {
         BetterArray a = new BetterArray(new float[][][]{

@@ -42,6 +42,16 @@ public class BetterArray {
         }
     }
 
+    public void multByScalar(float scalar) {
+        for (int i = 0; i < h; i++) {
+            for (int y = 0; y < w; y++) {
+                for (int z = 0; z < c; z++) {
+                    array[i][y][z] *= scalar;
+                }
+            }
+        }
+    }
+
     public void fillArray(int value) {
         for (int i = 0; i < h; i++) {
             for (int y = 0; y < w; y++) {
@@ -233,4 +243,30 @@ public class BetterArray {
         }
         return out;
     }
+
+    public BetterArray subtract(BetterArray x) {
+        BetterArray out = new BetterArray (x.array);
+        for (int a = 0; a < h; a++) {
+            for (int b = 0; b < w; b++) {
+                for (int d = 0; d < c; d++) {
+                    out.array[a][b][d] = this.array[a][b][d] - x.array[a][b][d];
+                }
+            }
+        }
+        return out;
+    }
+
+    public BetterArray transposeArray() {
+        float[][][] outArray = new float[this.array[0].length][this.array.length][this.array[0][0].length];
+        for (int a = 0; a < h; a++) {
+            for (int b = 0; b < w; b++) {
+                for (int d = 0; d < c; d++) {
+                    outArray[b][a][d] = this.array[a][b][d];
+                }
+            }
+        }
+        return new BetterArray (outArray);
+    }
+
+
 }
