@@ -12,17 +12,28 @@ public class Driver {
         float loss = utils.crossEntropyLoss(a, y);
         System.out.println ("Loss " + loss);
     }
+
+    public static void imageLoaderTest() {
+        BetterArray x = utils.loadPictures();
+//        float[] z = utils.flatten (x);
+//        x.printShape ();
+//        System.out.println ("z " + z.length );
+        boolean[] y = new boolean[] {true, false, true, false};
+        ShallowNN nn = new ShallowNN (x, y, 1);
+        nn.optimize (1000);
+    }
     public static void main(String[] args) {
 
 //        CELTests ();
-        ShallowNNTests ();
+//        ShallowNNTests ();
+        imageLoaderTest();
     }
 
     public static void ShallowNNTests() {
         BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
         boolean[] y = new boolean[] {true,false};
         ShallowNN nn = new ShallowNN (x, y, 1);
-        nn.optimize (10);
+        nn.optimize (10000);
     }
     public static void arrayTests() {
         BetterArray a = new BetterArray(new float[][][]{

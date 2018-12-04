@@ -211,7 +211,6 @@ public class BetterArray {
                 out.array[i][y][0] = currInner;
             }
         }
-        out.printArray ();
         return out;
     }
 //    public BetterArray dot(BetterArray x) {

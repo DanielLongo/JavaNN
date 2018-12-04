@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ShallowNN {
     private BetterArray w;
     private BetterArray b;
@@ -25,24 +27,23 @@ public class ShallowNN {
         for (int i = 0; i < numEpochs; i++) {
             propagate ();
             backpropagate ();
-
         }
     }
 
     public void propagate() {
 //        System.out.print ("x " );
-        x.printShape ();
-        System.out.print ("w ");
-        w.printShape ();
+//        x.printShape ();
+//        System.out.print ("w ");
+//        w.printShape ();
         BetterArray z = x.dot (w);
 //        System.out.print ("z ");
-        z.printShape ();
+//        z.printShape ();
 //        b.broadcastArray(z).printShape();
 //        z = z.add (b.broadcastArray (z));
-        BetterArray a = Activations.applyFuntion (z , "sigmoid");
+        this.a = Activations.applyFuntion (z , "sigmoid");
 //        System.out.print("A: ");
-        a.printShape ();
-        a.printArray ();
+//        a.printShape ();
+//        a.printArray ();
     }
 
     public void backpropagate() {
@@ -52,20 +53,23 @@ public class ShallowNN {
             if (y[i] == true) labels[i] = 1;
             else labels[i] = 0;
         }
-        loss = utils.crossEntropyLoss (logits, labels);
-        System.out.println ("KSGGHKJSDHFGKJSDHKJGHSKDJGKJDSFHGLKJSKDFH: " + loss);
-        float avg = (1/ logits.length);
-        System.out.println ( "HERERERERER");
-        x.printShape ();
-        x.transposeArray ().printShape ();
-        utils.unFlatten(utils.subtractArray (logits, labels)).printShape ();
-        System.out.print ( "KLSJHKJSHAFKJSAHDFKLJ");
+//        System.out.println ("logits "  + Arrays.toString (logits));
+//        System.out.println ("labels "  + Arrays.toString (labels));
+        float loss = utils.crossEntropyLoss (logits, labels);
+        System.out.println ("Loss: " + loss);
+        float avg = (float)(1./(float)(logits.length)); //Jaba
+//        x.printShape ();
+//        System.out.println ("logits " + Arrays.toString (logits));
+//        System.out.println ("labels " + Arrays.toString (labels));
+//        System.out.println ("x " + Arrays.deepToString (x.transposeArray ().array ));
         BetterArray dw =  x.transposeArray ().dot(utils.unFlatten(utils.subtractArray (logits, labels)));
         dw.multByScalar (avg);
-        System.out.print ("done" );
-        dw.printShape ();
+//        System.out.println ("avg " + avg);
+//        System.out.print ("done" );
+//        dw.printShape ();
         dw.multByScalar (lr);
-        System.out.println ("KSJDFKJSDFKJSDKFJHSDJKFHKJSDHFJKHKJFHDS THIS IS REAL " + dw.sum ());
+//        System.out.println ("DW sum  " + dw.sum ());
+//        System.out.println ("w sum " +  w.sum ());
         this.w = w.subtract(dw);
     }
 
