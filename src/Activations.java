@@ -1,4 +1,4 @@
-import java.lang.reflect.Method;
+
 
 public class Activations {
     public static float sigmoid(float x) {

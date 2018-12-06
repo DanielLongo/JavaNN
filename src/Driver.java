@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.management.RuntimeErrorException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,8 +26,9 @@ public class Driver {
     public static void main(String[] args) {
 
 //        CELTests ();
-        ShallowNNTests ();
+//        ShallowNNTests ();
 //        imageLoaderTest();
+        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg");}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
 
     }
 
