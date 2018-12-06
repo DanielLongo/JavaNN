@@ -36,8 +36,11 @@ public class DataFetch {
     public static final String DATASAMPLE_NOT_COW_NAME_SUFFIX = ".jpg";
 
 
-    /** The array of images **/
-    public ArrayList<BetterArray> images = new ArrayList<BetterArray>();
+    /** The arrayList of images **/
+    public ArrayList<BetterArray> imagesAsArrayList = new ArrayList<BetterArray>();
+
+    /** The flattened images in BetterArray Format **/
+    public  BetterArray images;
 
     /** The arrayList of labels **/
     public ArrayList<Boolean> labelsAsClass = new ArrayList<Boolean>();
@@ -55,7 +58,7 @@ public class DataFetch {
 
             int randomIndex = (int)((Math.random()*(DATASAMPLE_COW_MAX_SIZE-DATASAMPLE_COW_FIRST_INDEX))+DATASAMPLE_COW_FIRST_INDEX);
 
-            images.add(utils.loadPicture(DATASAMPLE_COW_DIRECTORY + DATASAMPLE_COW_NAME_PREFIX + randomIndex + DATASAMPLE_COW_NAME_SUFFIX));
+            imagesAsArrayList.add(utils.loadPicture(DATASAMPLE_COW_DIRECTORY + DATASAMPLE_COW_NAME_PREFIX + randomIndex + DATASAMPLE_COW_NAME_SUFFIX));
 
             labelsAsClass.add(Boolean.TRUE);
 
@@ -65,7 +68,7 @@ public class DataFetch {
         for (int i = 0; i < numNonCow; i++) {
             int randomIndex = (int)((Math.random()*(DATASAMPLE_NOT_COW_MAX_SIZE-DATASAMPLE_NOT_COW_FIRST_INDEX))+DATASAMPLE_NOT_COW_FIRST_INDEX);
 
-            images.add(utils.loadPicture(DATASAMPLE_NOT_COW_DIRECTORY + DATASAMPLE_NOT_COW_NAME_PREFIX + randomIndex + DATASAMPLE_NOT_COW_NAME_SUFFIX));
+            imagesAsArrayList.add(utils.loadPicture(DATASAMPLE_NOT_COW_DIRECTORY + DATASAMPLE_NOT_COW_NAME_PREFIX + randomIndex + DATASAMPLE_NOT_COW_NAME_SUFFIX));
 
             labelsAsClass.add(Boolean.FALSE);
         }
@@ -80,5 +83,34 @@ public class DataFetch {
             }
 
         }
+
+        float[][][] imageData = new float[imagesAsArrayList.size()][imagesAsArrayList.get(0).w*imagesAsArrayList.get(0).h*imagesAsArrayList.get(0).c][1];
+
+
+            float tiledMImages[][][] = new float[imagesAsArrayList.size()][100*100*3][1];
+
+            float[][] flattenedImages = new float[imagesAsArrayList.size()][100*100*3];
+            for (int i = 0; i < imagesAsArrayList.size(); i++) {
+                flattenedImages[i] = utils.flatten (imagesAsArrayList.get(i));
+            }
+
+
+
+            for (int i = 0; i < tiledMImages.length; i++) {
+                for (int j = 0; j < tiledMImages[0].length; j++) {
+                    for (int k = 0; k < tiledMImages[0][0].length; k++) {
+                        tiledMImages[i][j][k] = flattenedImages[i][j];
+
+                    }
+
+                }
+
+            }
+        BetterArray out = new BetterArray (tiledMImages);
+
+
+
+
+
     }
 }
