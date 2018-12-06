@@ -32,8 +32,8 @@ public class Driver {
 
     public static void ShallowNNTests() {
 //        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        DataFetch imageLoader = new DataFetch (100,100);
-        System.out.println(Arrays.deepToString (imageLoader.images.toArray()));
+        DataFetch imageLoader = new DataFetch (10,10);
+//        System.out.println(Arrays.deepToString (imageLoader.images.));
         BetterArray x = imageLoader.images;
         boolean [] y = imageLoader.labels;
 
