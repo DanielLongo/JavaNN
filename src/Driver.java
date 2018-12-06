@@ -25,13 +25,19 @@ public class Driver {
     public static void main(String[] args) {
 
 //        CELTests ();
-//        ShallowNNTests ();
-        imageLoaderTest();
+        ShallowNNTests ();
+//        imageLoaderTest();
+
     }
 
     public static void ShallowNNTests() {
-        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        boolean[] y = new boolean[] {true,false};
+//        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
+        DataFetch imageLoader = new DataFetch (100,100);
+        System.out.println(Arrays.deepToString (imageLoader.images.toArray()));
+        BetterArray x = imageLoader.images;
+        boolean [] y = imageLoader.labels;
+
+//        boolean[] y = new boolean[] {true,false};
         ShallowNN nn = new ShallowNN (x, y, 1);
         nn.optimize (10000);
     }
