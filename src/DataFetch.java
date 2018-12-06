@@ -43,11 +43,12 @@ public class DataFetch {
     public ArrayList<Boolean> labels = new ArrayList<>();
     /**
      * Fetch data and label
-     * @param numCows
-     * @param numNonCow
+     * @param numCows The number of cows to train
+     * @param numNonCow The number of non-cows to train
      */
     public DataFetch(int numCows, int numNonCow){
         for(int i = 0; i < numCows; i ++){
+
 
             int randomIndex = (int)((Math.random()*(DATASAMPLE_COW_MAX_SIZE-DATASAMPLE_COW_FIRST_INDEX))+DATASAMPLE_COW_FIRST_INDEX);
 
