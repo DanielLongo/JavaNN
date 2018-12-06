@@ -28,7 +28,7 @@ public class Driver {
 //        CELTests ();
 //        ShallowNNTests ();
 //        imageLoaderTest();
-        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg");}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
+        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg",false);}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
 
     }
 
