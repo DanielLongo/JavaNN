@@ -106,7 +106,7 @@ public class DataFetch {
                 }
 
             }
-        BetterArray out = new BetterArray (tiledMImages);
+        images= new BetterArray (tiledMImages);
 
 
 
