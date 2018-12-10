@@ -35,22 +35,27 @@ public class Driver {
     public static void main(String[] args) {
 //        utilsTests ();
 //        CELTests ();
-//        ShallowNNTests ();
-        imageLoaderTest();
+        ShallowNNTests ();
+//        imageLoaderTest();
 //        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg",false);}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
 
     }
 
     public static void ShallowNNTests() {
 //        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        DataFetch imageLoader = new DataFetch (10,10);
+        DataFetch imageLoader = new DataFetch (300,300);
 //        System.out.println(Arrays.deepToString (imageLoader.images.));
         BetterArray x = imageLoader.images;
         boolean [] y = imageLoader.labels;
 
 //        boolean[] y = new boolean[] {true,false};
         ShallowNN nn = new ShallowNN (x, y, 1);
-        nn.optimize (10000);
+        nn.optimize (10);
+        DataFetch imageLoaderTest = new DataFetch (1,0);
+        BetterArray xTest = imageLoaderTest.images;
+        boolean [] yTest = imageLoaderTest.labels;
+        System.out.println ("Pred " +  nn.predict (xTest));
+
     }
     public static void arrayTests() {
         BetterArray a = new BetterArray(new float[][][]{

@@ -23,8 +23,20 @@ public class ShallowNN {
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
+    public boolean predict(BetterArray x) {
+        this.x = x;
+        propagate ();
+        if (this.a.array[0][0][0] >= .5) {
+            return true;
+        }
+        return false;
+    }
+
     public  void optimize(int numEpochs) {
         for (int i = 0; i < numEpochs; i++) {
+            int[] indexes = utils.getRandomIndexes (x.array.length);
+            x = utils.shuffleBetterArray (x, indexes);
+            y = utils.shuffleLabels (y, indexes);
             propagate ();
             backpropagate ();
         }
