@@ -122,12 +122,5 @@ public class DataFetch {
 
     }
 
-    public static String GetRandomCowOrNotCowPath = "";
-    public static void getRandomCowOrNotCow(){
-        int isCow = (int)Math.random()*2;
-        if(isCow == 1){
 
-        }
-
-    }
 }
