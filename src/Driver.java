@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Driver {
     public static void CELTests() {
@@ -43,7 +44,7 @@ public class Driver {
 
     public static void ShallowNNTests() {
 //        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        DataFetch imageLoader = new DataFetch (300,300);
+        DataFetch imageLoader = new DataFetch (30,30, true);
 //        System.out.println(Arrays.deepToString (imageLoader.images.));
         BetterArray x = imageLoader.images;
         boolean [] y = imageLoader.labels;
@@ -51,14 +52,34 @@ public class Driver {
 //        boolean[] y = new boolean[] {true,false};
         ShallowNN nn = new ShallowNN (x, y, 1);
         nn.optimize (10);
-        DataFetch imageLoaderTest = new DataFetch (1,0);
-        BetterArray xTest = imageLoaderTest.images;
-        boolean [] yTest = imageLoaderTest.labels;
-        //System.out.println ("Pred " +  nn.predict (xTest));
-        try{
-            ImageViewer a = new ImageViewer("",nn.predict(xTest));
-        }catch (IOException e){
+        DataFetch imageLoaderTest = new DataFetch (10,10, false);
+        int loc = 0;
+        BetterArray currImage;
+        boolean[] currLabel = new boolean[1];
+        String currFilePath = "Error";
+        while (loc < 20) {
+            if (loc % 2 == 1) {
+                currFilePath = DataFetch.DATASAMPLE_COW_DIRECTORY + "cow" + ((loc/2) + 1) + ".jpg" ;
+                currLabel[0] = true;
+            }
+            else if (loc % 2 == 0) {
+                currFilePath = DataFetch.DATASAMPLE_NOT_COW_DIRECTORY + "notcow" + (loc/2) + ".jpg";
+                currLabel[0] = false;
+            }
 
+            currImage = utils.convert2DtoBetterArray (imageLoaderTest.images.array[loc]);
+        //System.out.println ("Pred " +  nn.predict (xTest));
+//            currImage.printShape ();
+           try{
+                ImageViewer a = new ImageViewer(currFilePath, (nn.predict(currImage)));
+            } catch (IOException e) {}
+
+            Scanner a = new Scanner(System.in);
+           System.out.println("Press enter to continue");
+           String buffer = a.nextLine ();
+
+
+        loc += 1;
         }
 
     }

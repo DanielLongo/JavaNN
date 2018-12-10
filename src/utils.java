@@ -212,5 +212,14 @@ public class utils {
         return out;
     }
 
+    public static BetterArray convert2DtoBetterArray(float [][] x) {
+        float[][][] outArray = new float[1][x.length][1];
+        for (int i = 0; i < outArray.length; i++) {
+            for (int j = 0; j < outArray[0].length; j++) {
+                outArray[0][j][0] = x[j][0];
+            }
+        }
+        return new BetterArray (outArray);
+    }
 
 }

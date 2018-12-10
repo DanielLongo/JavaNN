@@ -26,9 +26,12 @@ public class ShallowNN {
     public boolean predict(BetterArray x) {
         this.x = x;
         propagate ();
+        System.out.println ("this a " + this.a.array[0][0][0] );
         if (this.a.array[0][0][0] >= .5) {
+            System.out.println ("Mooooooo" );
             return true;
         }
+        System.out.println ("boooooooo" );
         return false;
     }
 
