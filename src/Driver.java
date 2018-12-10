@@ -14,21 +14,30 @@ public class Driver {
         System.out.println ("Loss " + loss);
     }
 
+    public static void utilsTests() {
+        int[] indexes = utils.getRandomIndexes (10);
+        System.out.println (Arrays.toString (indexes) );
+
+    }
+
     public static void imageLoaderTest() {
         BetterArray x = utils.loadPictures();
+        int[] indexes = utils.getRandomIndexes (x.array.length);
+        x = utils.shuffleBetterArray (x, indexes);
 //        float[] z = utils.flatten (x);
 //        x.printShape ();
 //        System.out.println ("z " + z.length );
         boolean[] y = new boolean[] {true, false, true, false};
+        y = utils.shuffleLabels (y, indexes);
         ShallowNN nn = new ShallowNN (x, y, 1);
         nn.optimize (1000);
     }
     public static void main(String[] args) {
-
+//        utilsTests ();
 //        CELTests ();
 //        ShallowNNTests ();
-//        imageLoaderTest();
-        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg",false);}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
+        imageLoaderTest();
+//        try{ImageViewer aaa = new ImageViewer("C:\\Users\\alex\\Desktop\\mark-basarab-122141-unsplash.jpg",false);}catch(IOException e){throw new RuntimeErrorException(new Error(e.toString()));}
 
     }
 

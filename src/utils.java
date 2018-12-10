@@ -185,5 +185,32 @@ public class utils {
         return out;
     }
 
+    public static BetterArray shuffleBetterArray (BetterArray x, int[] indexes) {
+        BetterArray out = new BetterArray (x.getShape (), 0);
+        for (int i = 0; i < x.array.length; i++) {
+            out.array[i] = x.array[indexes[i]];
+        }
+        return out;
+    }
+
+    public static boolean[] shuffleLabels (boolean[] x, int[] indexes) {
+        boolean[] out = new boolean[x.length];
+        for (int i = 0; i < out.length; i++) {
+            out[i] = x[indexes[i]];
+        }
+        return out;
+    }
+
+    public static int[] getRandomIndexes(int len) {
+        java.util.Random rgen = new java.util.Random();
+        int randomPosition;
+        int[] out = new int [len];
+        for (int i = 0; i < out.length; i++) {
+             randomPosition = rgen.nextInt(out.length);
+             out[randomPosition] = i;
+        }
+        return out;
+    }
+
 
 }
