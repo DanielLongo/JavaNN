@@ -54,7 +54,12 @@ public class Driver {
         DataFetch imageLoaderTest = new DataFetch (1,0);
         BetterArray xTest = imageLoaderTest.images;
         boolean [] yTest = imageLoaderTest.labels;
-        System.out.println ("Pred " +  nn.predict (xTest));
+        //System.out.println ("Pred " +  nn.predict (xTest));
+        try{
+            ImageViewer a = new ImageViewer("",nn.predict(xTest));
+        }catch (IOException e){
+
+        }
 
     }
     public static void arrayTests() {

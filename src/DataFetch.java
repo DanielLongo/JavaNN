@@ -47,16 +47,20 @@ public class DataFetch {
 
     /** The array of labels **/
     public boolean[] labels;
+
+
     /**
      * Fetch data and label
      * @param numCows The number of cows to train
      * @param numNonCow The number of non-cows to train
      */
-    public DataFetch(int numCows, int numNonCow){
+    public DataFetch(int numCows, int numNonCow, boolean shuffle){
         for(int i = 0; i < numCows; i ++){
 
 
-            int randomIndex = (int)((Math.random()*(DATASAMPLE_COW_MAX_SIZE-DATASAMPLE_COW_FIRST_INDEX))+DATASAMPLE_COW_FIRST_INDEX);
+            int randomIndex = -1;
+            if(shuffle){randomIndex = (int)((Math.random()*(DATASAMPLE_COW_MAX_SIZE-DATASAMPLE_COW_FIRST_INDEX))+DATASAMPLE_COW_FIRST_INDEX);}
+            else{ randomIndex = i;}
 
             imagesAsArrayList.add(utils.loadPicture(DATASAMPLE_COW_DIRECTORY + DATASAMPLE_COW_NAME_PREFIX + randomIndex + DATASAMPLE_COW_NAME_SUFFIX));
 
@@ -66,7 +70,11 @@ public class DataFetch {
         }
 
         for (int i = 0; i < numNonCow; i++) {
-            int randomIndex = (int)((Math.random()*(DATASAMPLE_NOT_COW_MAX_SIZE-DATASAMPLE_NOT_COW_FIRST_INDEX))+DATASAMPLE_NOT_COW_FIRST_INDEX);
+            int randomIndex;
+            if(shuffle){randomIndex = (int)((Math.random()*(DATASAMPLE_NOT_COW_MAX_SIZE-DATASAMPLE_NOT_COW_FIRST_INDEX))+DATASAMPLE_NOT_COW_FIRST_INDEX);}
+            else{
+                randomIndex = i;
+            }
 
             imagesAsArrayList.add(utils.loadPicture(DATASAMPLE_NOT_COW_DIRECTORY + DATASAMPLE_NOT_COW_NAME_PREFIX + randomIndex + DATASAMPLE_NOT_COW_NAME_SUFFIX));
 
@@ -111,6 +119,15 @@ public class DataFetch {
 
 
 
+
+    }
+
+    public static String GetRandomCowOrNotCowPath = "";
+    public static void getRandomCowOrNotCow(){
+        int isCow = (int)Math.random()*2;
+        if(isCow == 1){
+
+        }
 
     }
 }
