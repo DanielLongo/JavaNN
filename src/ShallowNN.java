@@ -1,3 +1,4 @@
+import javax.management.MBeanTrustPermission;
 import java.util.Arrays;
 
 public class ShallowNN {
@@ -19,7 +20,7 @@ public class ShallowNN {
 
     public void initializeVariables() {
         w = new BetterArray (new int[]{x.array[0].length, d, 1}, 0);
-        b = new BetterArray (new int[]{x.array.length, d, 1},1);
+        b = new BetterArray (new int[]{x.array.length, 1, 1},1);
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
@@ -54,7 +55,8 @@ public class ShallowNN {
 //        System.out.print ("z ");
 //        z.printShape ();
 //        b.broadcastArray(z).printShape();
-//        z = z.add (b.broadcastArray (z));
+//        b.broadcastArray (z).printShape ();
+        z = z.add (b.broadcastArray (z));
         this.a = Activations.applyFuntion (z , "sigmoid");
 //        System.out.print("A: ");
 //        a.printShape ();
@@ -83,9 +85,13 @@ public class ShallowNN {
 //        System.out.print ("done" );
 //        dw.printShape ();
         dw.multByScalar (lr);
+
+        BetterArray db = utils.unFlatten(utils.subtractArray (logits, labels));
+        db.multByScalar (avg);
 //        System.out.println ("DW sum  " + dw.sum ());
 //        System.out.println ("w sum " +  w.sum ());
         this.w = w.subtract(dw);
+        this.b = b.subtract (db);
     }
 
 //    public void backward() {

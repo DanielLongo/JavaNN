@@ -137,7 +137,7 @@ public class BetterArray {
     }
 
     public BetterArray broadcastArray(BetterArray x) {
-        if ((this.w + this.c) == 2) {
+        if ((this.h + this.c) == 2) {
             throw new InvalidParameterException("Brodacasted Array is multidimensional");
         }
         float curVal;
