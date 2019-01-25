@@ -19,14 +19,19 @@ public class ShallowNN {
     }
 
     public void initializeVariables() {
-        w = new BetterArray (new int[]{x.array[0].length, d, 1}, 0);
+//        w = new BetterArray (new int[]{x.array[0].length, d, 1}, 0);
+        w = new BetterArray (new int[]{x.array[0].length, 1, 1}, 0);
         b = new BetterArray (new int[]{x.array.length, 1, 1},1);
         a = new BetterArray (new int[]{x.array.length, d, 1},0);
     }
 
     public boolean predict(BetterArray x) {
+//        System.out.println ("KJSKDHKJDKSJDKJ" );
         this.x = x;
+        this.x.printShape ();
+        System.out.println ("KJSKDHKJDKSJDKJsdadasfdsfsdfsdkfjkj" );
         propagate ();
+        System.out.println ("KJSKDHKJDKSJDKJsdadasfdsfsdfsdkfjkjSFKJSFKJSDHFKSDHFHSD" );
         System.out.println ("this a " + this.a.array[0][0][0] );
         if (this.a.array[0][0][0] >= .5) {
             System.out.println ("Mooooooo" );
@@ -51,13 +56,21 @@ public class ShallowNN {
 //        x.printShape ();
 //        System.out.print ("w ");
 //        w.printShape ();
+        w.printShape ();
         BetterArray z = x.dot (w);
+        z.printShape ();
 //        System.out.print ("z ");
 //        z.printShape ();
 //        b.broadcastArray(z).printShape();
-//        b.broadcastArray (z).printShape ();
-        z = z.add (b.broadcastArray (z));
+//        this.x.printShape ();
+//        z.printShape ();
+//        if (z.getShape ()[0] == 1) z.add (b).broadcastArray (z);
+        if (z.getShape ()[0] == 1) z.add (b);
+        else {
+            z = z.add (b.broadcastArray (z));
+        }
         this.a = Activations.applyFuntion (z , "sigmoid");
+        a.printShape ();
 //        System.out.print("A: ");
 //        a.printShape ();
 //        a.printArray ();
@@ -79,6 +92,8 @@ public class ShallowNN {
 //        System.out.println ("logits " + Arrays.toString (logits));
 //        System.out.println ("labels " + Arrays.toString (labels));
 //        System.out.println ("x " + Arrays.deepToString (x.transposeArray ().array ));
+        System.out.println ((logits.length) );
+        System.out.println ((labels.length) );
         BetterArray dw =  x.transposeArray ().dot(utils.unFlatten(utils.subtractArray (logits, labels)));
         dw.multByScalar (avg);
 //        System.out.println ("avg " + avg);

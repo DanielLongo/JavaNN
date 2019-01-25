@@ -44,14 +44,17 @@ public class Driver {
 
     public static void ShallowNNTests() {
 //        BetterArray x = new BetterArray(new float[][][]{{{2},{4},{9}},{{3},{2},{2}}});
-        DataFetch imageLoader = new DataFetch (499,499, true);
+        DataFetch imageLoader = new DataFetch (75,75, true);
 //        System.out.println(Arrays.deepToString (imageLoader.images.));
         BetterArray x = imageLoader.images;
         boolean [] y = imageLoader.labels;
 
 //        boolean[] y = new boolean[] {true,false};
-        ShallowNN nn = new ShallowNN (x, y, 1);
-        nn.optimize (100);
+//        x.printShape ();
+//        System.out.println (Arrays.toString (y) );
+        ShallowNN nn = new ShallowNN (x, y, 14);
+        x.printShape ();
+        nn.optimize (1);
         DataFetch imageLoaderTest = new DataFetch (10,10, true);
         int loc = 0;
         BetterArray currImage;
